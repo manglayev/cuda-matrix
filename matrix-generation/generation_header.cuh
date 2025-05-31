@@ -26,5 +26,5 @@ extern void caller();
 extern void wrapper();
 //extern int checkResults(int *a);
 //extern int* initArray();
-extern std::array<int, N> generateArray();
+extern std::array<std::array<int, N>, N> generateArray();
 //void printArray(std::array<std::array<int, N>, N>& a);

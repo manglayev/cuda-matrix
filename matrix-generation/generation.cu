@@ -10,20 +10,24 @@ __global__ void cuda_global(int *dev_a)
     dev_a[0] = 0;
   }
 }
-
-std::array<int, N> generateArray()
+//generate N x N array
+std::array<std::array<int, N>, N> generateArray()
 {
   std::default_random_engine engine{};
   std::uniform_int_distribution randomNumbers{-9, 9};
-  std::array<int, N> a{};
+  std::array<std::array<int, N>, N> a{};
   for(int i = 0; i < N; i++)
   {
-    a[i] = randomNumbers(engine);
+    for(int j = 0; j < N; j++)
+    {
+      a[i][j] = randomNumbers(engine);
+    }
   }
   return a;
 }
-/*
-print N x N matrix
+
+
+//print N x N matrix
 void printArray(std::array<std::array<int, N>, N>& a)
 {
   // loop through array's rows
@@ -32,24 +36,20 @@ void printArray(std::array<std::array<int, N>, N>& a)
     // loop through columns of current row
     for (const auto& element : row)
     {
-      std::cout << element << ' ';
+      if(element >= 0)
+        std::cout << ' ' << element << ' ';
+      else
+        std::cout << element << ' ';
     }
     std::cout << '\n'; // start new line of output
   }
 }
-*/
+
 void wrapper()
 {
   printf("STAGE 3 WRAPPER START\n");
-  std::array a{generateArray()};
-  
-  for (const auto& element : a)
-  {
-      std::cout << element << ' ';
-  }
-  std::cout << '\n'; // start new line of output
-  
-  //printArray(a);
+  std::array<std::array<int, N>, N> a = generateArray();
+  printArray(a);
   /*
   int *dev_a;
   cudaMalloc((void**)&dev_a, CUDASIZE*sizeof(int));
